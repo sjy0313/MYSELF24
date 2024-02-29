@@ -1,0 +1,16 @@
+일반 인증키(encoding)
+7SjC5GNIptu1nf70ctdA2xzMPCfwhrj8gUKiz1hI8jNrRWh%2Fa36saSQzimo65SGxgmYxSJfokGZJMdairf9kgg%3D%3D
+decoding
+7SjC5GNIptu1nf70ctdA2xzMPCfwhrj8gUKiz1hI8jNrRWh/a36saSQzimo65SGxgmYxSJfokGZJMdairf9kgg==
+callback URL (=서비스URL로 요청을 받는 API와 데이터가 저장된 위치라고 생각하면 된다.)
+http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTrade
+요청URL 만들기 서비스url?부터 시작
+서비스URL?LAWD_CD=지역코트$DEAL_YMD=거래연월&serviceKey=api인증키
+
+최종본.
+http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTrade
+서비스URL?LAWD_CD=지역코트$DEAL_YMD=거래연월&serviceKey=
+7SjC5GNIptu1nf70ctdA2xzMPCfwhrj8gUKiz1hI8jNrRWh%2Fa36saSQzimo65SGxgmYxSJfokGZJMdairf9kgg%3D%3D
+
+응답결과
+http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTrade?LAWD_CD=11110&DEAL_YMD=201512&serviceKey=7SjC5GNIptu1nf70ctdA2xzMPCfwhrj8gUKiz1hI8jNrRWh%2Fa36saSQzimo65SGxgmYxSJfokGZJMdairf9kgg%3D%3D&
