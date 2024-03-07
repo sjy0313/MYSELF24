@@ -1,0 +1,28 @@
+https://www.python.org/downloads/
+https://www.anaconda.com/download-success
+dll: dynamic link library(내부에서 다른 프로그램이 불러서 쓸 수 있는
+다양한 함수를 포함하고 있음)
+https://code.visualstudio.com/docs/?dv=win64user
+visual studiocode 
+extention 에서 python 다운로드
+view -> command palette -> python select interpreter (파일읽는 위치 설정
+settings(톱니) -> font 에서 font family 에서 console 앞에 D2Coding 추가 console font size 20설정
+debug에서 console 검색 debug console font size 16 설정 
+python 해당 파일 주소검색 창에서 내용지우고 cmd검색
+명령 프롬프트 에서 
+dir enter ( 해당 파일 목록들 확인)
+python s01 뒤에내용은 저장되어 있으면 tab을 통해 완성가능 enter 
+작업내용 실행가능 뒤로가기 ctrl + z(탈출하기)
+
+SPYDER 사용법
+아나콘다 설치 후 environment에서 create  (가상환경 만들기)
+home 에서 spyder 설치 
+spyder(내가 만든 가상환경에서) tool 에서 preferences-> working directory -> syntax로 지정
+run -> remove all variables before execution 클릭
+appearance -> font->d2coding -> size16  
+f5 -> 전체 script실행( 기존의 변수제거) 
+"""사이의 내용은 주석처리"""
+#%% 셀분리 # 주석 
+CTRL + ENTER 현재 셀 실행
+SHIFT + ENTER 다음 셀 실행 
+f9 선택적으로 실행(라인단위)
