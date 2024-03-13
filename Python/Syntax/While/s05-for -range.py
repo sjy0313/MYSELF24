@@ -46,7 +46,7 @@ m = range(s, e+1, j)
 t = 0 
 for n in m:
     print(n, end=' ')
-    if n != e-1:
+    if n != e-1: 
       print(', ',end=', ')
     
     t += n
