@@ -13,7 +13,7 @@ Created on Wed Mar  6 17:33:49 2024
 
 lst = ['삼성', 'SK', 'LG']
 rt = lst.append(['APPLE', 'HD'])
-                 
+             
 print("append() 함수의 리턴값?", rt)  # None
 # garbage collection. isenabled() 
 #-- Returns true if automatic collection is enabled. GC로 rt값 복원가능

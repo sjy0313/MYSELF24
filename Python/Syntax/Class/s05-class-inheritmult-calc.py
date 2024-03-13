@@ -30,8 +30,7 @@ class Calculator :
     
     def divide(self, a, b):
         if b == 0:
-            print("Error: Integer ONLY available" )
-            return None
+            raise ValueError("Error: Division by zero is not allowed.")
         return a / b
     
     def calculate(self,op,*args):
@@ -47,6 +46,15 @@ class Calculator :
      else:
          print("Error: We do not support any following op")
          return None
+     
+      
+
+#%%
+# 예외발생 raise 예외클라스
+def HiBird(hi):
+    if hi == 'dead': # - 1->errno, msg->새가 죽었습니다, why-> 늙어서
+        raise BirdException(-1, "새가 죽었습니다", "늙어서") # 예외발생
+    print("[버드] 안녕?")
      
      self.tot += result
      self.cnt += 1

@@ -13,7 +13,8 @@ Created on Wed Mar  6 17:34:43 2024
 
 lst = ['삼성', 'SK', 'LG']
 elt = ['APPLE', 'HD']
-
+lst.extend(elt)
+print(lst)
 rt = lst.extend(elt)
 print("리턴:", rt) # 리턴: None
 
