@@ -37,14 +37,20 @@ score = [
 df = pd.DataFrame(score, columns=['수학','영어','음악','체육'],
                   index=['서준', '준서', '인아', '수성'])
 print(df)
-
+# 빈 인덱스(행) 생성
 ndf = df.reset_index()
 print(ndf)
-ndf.rename(columns={'index':'이름'}, inplace=True)
+# '인덱스
+# s04-dataframe-index-column01.py, s06-dataframe-reset-index01.py 참조
+ndf.rename(columns={'index':'이름'}, inplace=True) # 원본 변경
 
 pdf = ndf.set_index('이름')
 print(pdf)
 
+
+xdf = ndf.rename(index={'정윤' :'신정윤', '희애':'신정희'},
+           columns={'나이':'연령'}, inplace=True)
+print(ndf)
 
 
 
