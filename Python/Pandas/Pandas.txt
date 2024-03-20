@@ -1,0 +1,29 @@
+Pandas 웹스크레이핑 예제코드
+https://github.com/wikibook/pyscraping
+sypder doc
+spyder plugin 에서 찾을 수 있음 .
+https://docs.spyder-ide.org/current/index.html
+Anaconda powershell prompt 들어가기
+conda activate YSIT24(가상환경으로 들어가기) ( 집에서 설정 시 내가 만든 anaconda environment 이름으로 activate)
+ conda install spyder-line-profiler -c conda-forge
+conda install spyder-notebook -c conda-forge
+conda install spyder-terminal -c conda-forge
+pip install pandas
+
+pip list
+pip show pandas # 2.2.1
+
+anaconda navigator 에서 YSIT24 jupyter notebook 다운 
+anaconda powershell 접속 아래 입력. 
+jupyter notebook --notebook-dir="D:\Workspace(SHIN)\Python\WebScraping\notebooks"
+ctrl + c 작업종료 새로운 명령어 입력시
+spyder -> view-> panes-> lineprofiler 선택되면 spyder notbook 에서
+notebook 파일 저장시 trusted 위에 +오른쪽에 있는 아이콘 클릭 -> save as -> 원하는 파일 저장
+jupyter notebook과 같이 사용가능 
+# Ctrl+Enter : 현재 셀을 실행 
+# shift+Enter : 현재 셀을 실행하고 다음 셀로 이동, 다음셀이 없으면 새로운 셀 생성 
+# alt + Enter : 현재 셀을 실행하고 아래에 새로운 셀을 생성
+
+jupyter 웹 실행 원하는 해당 코드파일을 python으로 저장하고 싶으면:
+ -> file -> save and export notebooks as -> executable scripts 
+ 
