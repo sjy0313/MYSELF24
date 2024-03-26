@@ -1,0 +1,18 @@
+chrome driver
+https://chromedriver.chromium.org/downloads
+file : 	chromedriver_win32.zip
+chrome browser downgrade
+version : chromedriver_win32.zip
+https://google-chrome.en.uptodown.com/windows/post-download/101911212
+서비스 (window 검색창)
+google 업데이트 서비스 속성에서 시작유형 -> 사용안함으로 설정.
+
+selenium 설치
+activate conda YSIT24
+pip install selenium
+pip install webdriver_manager
+
+https://www.selenium.dev/selenium/web/web-form.html
+
+
+

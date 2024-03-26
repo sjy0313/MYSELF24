@@ -23,9 +23,13 @@ url = base_url + "?code=" + stock_code
 
 html = requests.get(url).text
 soup = BeautifulSoup(html, 'lxml')
-
-print(url)
-
+# HTTP : GET METHOD
+print(url)# https://finance.naver.com/item/main.nhn?code=005930  삼성전자
+# https://finance.naver.com/item/main.naver?code=019170 신풍제약
+# ? 구분해주는역할 (=) 뒤에 parameter로 값이 주소에 따라 달라짐 
+# 코스피50
+# 3번의 변곡점 찍으면 매도세 강해짐. 상승 1/2/4/8 
+# 하락일 떄도 3번쨰 빠질떄 매수 하락일 떄
 
 # [6장: 250페이지]
 
@@ -33,13 +37,20 @@ print(url)
 
 
 soup.select_one('p.no_today')
-
+'''
+<p class="no_today">
+<em class="no_down">
+<span class="blind">78,800</span>
+<span class="no7">7</span><span class="no8">8</span><span class="shim">,</span><span class="no8">8</span><span class="no0">0</span><span class="no0">0</span>
+</em>
+</p>
+'''
 
 # In[ ]:
 
 
 stock_price = soup.select_one('p.no_today span.blind').get_text()
-stock_price
+stock_price # '78,800'
 
 
 # In[ ]:
@@ -68,7 +79,7 @@ def get_current_stock_price(stock_code):
 
 stock_code = "005930"
 current_stock_price = get_current_stock_price(stock_code)
-current_stock_price
+current_stock_price  # '78,900'
 
 
 # In[ ]:
@@ -99,9 +110,19 @@ url = "{0}?method={1}".format(base_url, method)
 df = pd.read_html(url, header=0)[0]
 
 with pd.option_context('display.max_columns',4): # 최대 4개까지 열이 표시하도록 설정
-    pd.set_option("show_dimensions", False)      # 행과 열 개수 출력 안 하기
-    display(df.head())
+     pd.set_option("show_dimensions", False)      # 행과 열 개수 출력 안 하기
+     display(df.head())
+# http://kind.krx.co.kr/corpgeneral/corpList.do?method=download  통해 액셀파일다운    
+'''
+with()
+ 파일에 접근
+2. 파일 내용등을 읽고 쓰고 삭제하고 수정하는 등등 무언가의 일의 수행
+3. 파일을 해제(close) 하는 패턴
+예를 들어 우리가 엑셀 파일을 열으면 파일을 열고 있는 동안 다른 프로그램에서 
+엑셀 파일에 접근할 수 없게 된므로 파일을 열었으면 닫아주는 일은 필수이다.
+# with문 실행을 하게 되면 close() (내재되어 있음) 실행
 
+'''
 
 # In[ ]:
 
@@ -188,7 +209,12 @@ def get_stock_code(company_name, maket_type=None):
 
 # In[ ]:
 
-
+ndf = df[df['회사명']=='삼성전자']
+ndf_code = ndf['종목코드']
+print(ndf) # DataFrame
+print(ndf_code) # Series 
+print(ndf_code.values) # Series : ['005930']
+ndf_code.values = ndf_code.value
 get_stock_code('삼성전자', 'kospi') # 삼성전자 주식 종목 코드 가져오기, 코스피(kospi) 지정
 
 
