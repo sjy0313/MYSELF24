@@ -1,0 +1,14 @@
+numpy
+pandas
+scipy
+matplotlib
+jupyter
+scikit-learn
+chardet
+gdown
+xlsxwriter
+sqlalchemy
+beautifulsoup4
+
+https://www.data.go.kr/
+https://www.data4library.kr/openDataV?libcode=4707

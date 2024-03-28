@@ -1,0 +1,35 @@
+streamlit
+anaconda power shell
+conda activate YSIT24
+pip install streamlit
+dir
+cd D:\WORKSPACE\Python\WebScraping\Streamlit\books
+streamlit run 파이썬파일이름.py
+
+(ECharts)
+Apache echarts 웹사이트(그래프 source코드 다운가능)
+https://echarts.streamlit.app/
+echarts (javascripts) 동적인 그래프
+pip install streamlit-echarts
+
+echart에서 그래프다운로드 할 떄 
+json 파일 저장방법 
+full code에서 copy해오기
+https://echarts.apache.org/examples(고정) +
+/data/asset/data/les-miserables.json
+
+https://echarts.apache.org/examples/data/asset/data/les-miserables.json
+
+
+# 예)
+# hello.py
+> streamlit run hello.py
+
+(Web Browser)
+http://localhost:8501/
+
+python에서 작업환경 위치확인
+import os
+
+print(os.getcwd())
+

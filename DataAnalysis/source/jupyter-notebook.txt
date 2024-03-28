@@ -1,0 +1,6 @@
+anaconda powershell 에서
+conda activate YSIT24
+jupyter notebook --notebook-dir="주피터노트북 파일이 있는 위치 문서에서 복사해주기" 
+jupyter notebook --notebook-dir="D:\WORKSPACE\Python\DataAnalysis\source”
+jupyter notebook -> 원하는 파일선택 -> file -> save and export notebook as -> executable script
+
