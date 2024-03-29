@@ -1,180 +1,57 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# # 03-2 잘못된 데이터 수정하기
-
-# <table class="tfo-notebook-buttons" align="left">
-#   <td>
-#     <a target="_blank" href="https://nbviewer.jupyter.org/github/rickiepark/hg-da/blob/main/03-2.ipynb"><img src="https://jupyter.org/assets/share.png" width="61" />주피터 노트북 뷰어로 보기</a>
-#   </td>
-#   <td>
-#     <a target="_blank" href="https://colab.research.google.com/github/rickiepark/hg-da/blob/main/03-2.ipynb"><img src="https://www.tensorflow.org/images/colab_logo_32px.png" />구글 코랩(Colab)에서 실행하기</a>
-#   </td>
-# </table>
-
-# ## 데이터프레임 정보 요약 확인하기
-
-# In[ ]:
-
-
-import gdown
-
-gdown.download('https://bit.ly/3GisL6J', 'ns_book4.csv', quiet=False)
-
-
-# In[ ]:
-
-
+import numpy as np
 import pandas as pd
 
-ns_book4 = pd.read_csv('ns_book4.csv', low_memory=False)
+ns_book4 = pd.read_csv('./data/ns_book4.csv', low_memory=False)
 ns_book4.head()
-
-
-# In[ ]:
-
-
-ns_book4.info()
-
-
-# In[ ]:
-
-
-ns_book4.info(memory_usage='deep')
-
-
-# ## 누락된 값 처리하기
-
-# In[ ]:
-
-
-ns_book4.isna().sum()
-
-
-# In[ ]:
-
-
-ns_book4.loc[0, '도서권수'] = None
-ns_book4['도서권수'].isna().sum()
-
-
-# In[ ]:
-
-
-ns_book4.head(2)
-
-
-# In[ ]:
-
-
-ns_book4.loc[0, '도서권수'] = 1
-ns_book4 = ns_book4.astype({'도서권수':'int32', '대출건수': 'int32'})
-ns_book4.head(2)
-
-
-# In[ ]:
-
-
-ns_book4.loc[0, '부가기호'] = None
-ns_book4.head(2)
-
-
-# In[ ]:
-
-
-import numpy as np
-
-ns_book4.loc[0, '부가기호'] = np.nan
-ns_book4.head(2)
-
-
-# In[ ]:
-
-
-set_isbn_na_rows = ns_book4['세트 ISBN'].isna()
-ns_book4.loc[set_isbn_na_rows, '세트 ISBN'] = ''
-
-ns_book4['세트 ISBN'].isna().sum()
-
-
-# In[ ]:
-
-
-ns_book4.fillna('없음').isna().sum()
-
-
-# In[ ]:
-
-
-ns_book4['부가기호'].fillna('없음').isna().sum()
-
-
-# In[ ]:
-
-
-ns_book4.fillna({'부가기호':'없음'}).isna().sum()
-
-
-# In[ ]:
-
-
-ns_book4.replace(np.nan, '없음').isna().sum()
-
-
-# In[ ]:
-
-
-ns_book4.replace([np.nan, '2021'], ['없음', '21']).head(2)
-
-
-# In[ ]:
-
-
-ns_book4.replace({np.nan: '없음', '2021': '21'}).head(2)
-
-
-# In[ ]:
-
-
-ns_book4.replace({'부가기호': np.nan}, '없음').head(2)
-
-
-# In[ ]:
 
 
 ns_book4.replace({'부가기호': {np.nan: '없음'}, '발행년도': {'2021': '21'}}).head(2)
 
-
-# ## 정규 표현식
-
+# ## 정규 표현식 (jumptopython 맨뒤에 있음)
+# regular expression 패턴을 찾아서 대체하기 위한 규칙의 모음.
 # In[ ]:
 
 
-ns_book4.replace({'발행년도': {'2021': '21'}})[100:102]
+ns_2021 = ns_book4.replace({'발행년도': {'2021': '21'}})[100:102]
+
+# ns_book4.replace({'발행년도': {'2021': '21'}})[100:102] # 안바뀜
+
+# In[ ]:
+# 정규표현식에서 \d의 의미는 숫자 -> \d\d\d\d 네자리 연도 -> 그룹으로 묶을 떄 ()사용
+#99(99) -> (99)
+#12(34) -> (34) 괄호로 묶은 첫번 쨰 그룹
+# r'\1' : 괄호에 묶은 첫번 쨰 그룹
+# regex -> 정규표현식을 사용한다는 의미
+ns_99 = ns_book4.replace({'발행년도': {r'\d\d(\d\d)': r'\1'}}, regex=True)[100:102]
+
+
+# In[ ]:
+# r'\d{2}(\d{2})' : 숫자2자리, 숫자2자리(그룹1) d{2}(\d{2} = \d\d(\d\d) 같은 의미
+# {} : 정규표현식에서 숫자가 여러 번 반복될 떄 사용
+# r'\1' : 그룹1 if \2는 그룹 2 
+
+ns_22 = ns_book4.replace({'발행년도': {r'\d{2}(\d{2})': r'\1'}}, regex=True)[100:102]
 
 
 # In[ ]:
 
-
-ns_book4.replace({'발행년도': {r'\d\d(\d\d)': r'\1'}}, regex=True)[100:102]
-
-
-# In[ ]:
-
-
-ns_book4.replace({'발행년도': {r'\d{2}(\d{2})': r'\1'}}, regex=True)[100:102]
-
-
-# In[ ]:
-
-
-ns_book4.replace({'저자': {r'(.*)\s\(지은이\)(.*)\s\(옮긴이\)': r'\1\2'},
+# 문자 찾기: 마침표(.) 어떤 문자에도 대응하는 표현식문자
+# (*) : 임의의 문자가 0개 이상 문자가 반복됨을 알림 
+# \s : 공백 space
+# \( : '('
+# \) : ')'
+ns_22 = ns_book4.replace({'저자': {r'(.*)\s\(지은이\)(.*)\s\(옮긴이\)': r'\1\2'},
                   '발행년도': {r'\d{2}(\d{2})': r'\1'}}, regex=True)[100:102]
+'''
+	저자
+100	헨리 클라우드, 존 타운센드, 김진웅
+101	로런스 인그래시아, 안기순
 
+'''
 
 # ## 잘못된 값 바꾸기
 
-# In[ ]:
+# # In[ ]:
 
 
 # 아래 코드는 오류 발생
@@ -182,50 +59,62 @@ ns_book4.replace({'저자': {r'(.*)\s\(지은이\)(.*)\s\(옮긴이\)': r'\1\2'}
 
 
 # In[ ]:
-
+# contains()는 정규 표현식을 인식 
 
 ns_book4['발행년도'].str.contains('1988').sum()
-
+# 407
 
 # In[ ]:
 
-
+# 정규표현식 : \D는 \d 의 반대로 즉, 숫자가 아닌 것.  
+# na매개변수를 True로 지정하여 연도가 누락된 행을 True로 표시 
+# if, 발행년도'에 누락된 값이 있다면 contains()는 np.nan으로 채워서 ivalid_number
+# 에 배열을 사용x
 invalid_number = ns_book4['발행년도'].str.contains('\D', na=True)
-print(invalid_number.sum())
-ns_book4[invalid_number].head()
+print(invalid_number.sum()) # 1777
+ns_book4[invalid_number].head() 
+'''
+         번호                       도서명  ... 대출건수        등록일자
+19138  19565                      단국강토  ...  1.0  2019-12-19
+19227  19736                    삼성의 역사  ...  1.0  2019-12-06
+26097  26812                  배고픈 애벌레   ...  0.0  2019-08-12
+29817  30586  (The) Sopranos sessions   ...  0.0  2019-06-13
+29940  30709                    다음엔 너야  ...  9.0  2019-06-04
+'''
 
 
 # In[ ]:
 
-
+# 숫자그룹 앞뒤로 * 를 묶어주어 어떤 문자가 나오더라도 모두 매칭시키기 위해.
 ns_book5 = ns_book4.replace({'발행년도':r'.*(\d{4}).*'}, r'\1', regex=True)
 ns_book5[invalid_number].head()
 
 
 # In[ ]:
 
-
+# \D 문자 인 것들과 그외에 na값들을 출력 
 unkown_year = ns_book5['발행년도'].str.contains('\D', na=True)
-print(unkown_year.sum())
+print(unkown_year.sum())# 67
 ns_book5[unkown_year].head()
 
 
 # In[ ]:
 
-
+# 임의로 -1로 바꾸어 준 ㅏㄷ음 
 ns_book5.loc[unkown_year, '발행년도'] = '-1'
 ns_book5 = ns_book5.astype({'발행년도': 'int32'})
+ 
+
+# In[ ]:
+
+# 연도가 4000이 넘는 행의 개수
+# gt()는 전달된 값보다 큰 값을 찾는 매서드
+ns_book5['발행년도'].gt(4000).sum() # 131
 
 
 # In[ ]:
 
-
-ns_book5['발행년도'].gt(4000).sum()
-
-
-# In[ ]:
-
-
+# 4000 - 2333 서기로 바꾼다음 4000이 넘는 도서찾기 
 dangun_yy_rows = ns_book5['발행년도'].gt(4000)
 ns_book5.loc[dangun_yy_rows, '발행년도'] = ns_book5.loc[dangun_yy_rows, '발행년도'] - 2333
 
@@ -233,20 +122,20 @@ ns_book5.loc[dangun_yy_rows, '발행년도'] = ns_book5.loc[dangun_yy_rows, '발
 # In[ ]:
 
 
-dangun_year = ns_book5['발행년도'].gt(4000)
-print(dangun_year.sum())
+dangun_year = ns_book5['발행년도'].gt(4000) 
+print(dangun_year.sum()) 
 ns_book5[dangun_year].head(2)
 
 
 # In[ ]:
 
 
-ns_book5.loc[dangun_year, '발행년도'] = -1
+ns_book5.loc[dangun_year, '발행년도'] = -1 
 
 
 # In[ ]:
 
-
+# 0<발행연도<1900
 old_books = ns_book5['발행년도'].gt(0) & ns_book5['발행년도'].lt(1900)
 ns_book5[old_books]
 
@@ -260,7 +149,7 @@ ns_book5.loc[old_books, '발행년도'] = -1
 # In[ ]:
 
 
-ns_book5['발행년도'].eq(-1).sum()
+ns_book5['발행년도'].eq(-1).sum() # 86
 
 
 # ## 누락된 정보 채우기
@@ -270,8 +159,8 @@ ns_book5['발행년도'].eq(-1).sum()
 
 na_rows = ns_book5['도서명'].isna() | ns_book5['저자'].isna() \
           | ns_book5['출판사'].isna() | ns_book5['발행년도'].eq(-1)
-print(na_rows.sum())
-ns_book5[na_rows].head(2)
+print(na_rows.sum())   # 5380
+ns_book5[na_rows].head(2) 
 
 
 # In[ ]:
@@ -314,7 +203,7 @@ def get_book_title(isbn):
 # In[ ]:
 
 
-get_book_title(9791191266054)
+get_book_title(9791191266054) # '골목의 시간을 그리다'
 
 
 # In[ ]:
@@ -374,7 +263,9 @@ def get_book_info(row):
 
 # In[ ]:
 
-
+# 샘플테스트
+# result_type = 'expand' : get_book_info()로 부터 반환 된 리턴 값을 
+# 각기 다른 열로 만듬
 updated_sample = ns_book5[na_rows].head(2).apply(get_book_info,
     axis=1, result_type ='expand')
 updated_sample

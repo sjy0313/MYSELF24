@@ -419,7 +419,7 @@ pd.merge(df1, df2, left_on='col2', right_index=True)
 # join() 함수는, merge()함수를 기반으로 만들어졌지만 join()는 행 인덱스를 기준(즉, 왼쪽첫번쨰
 # 데이터프레임 how='left')을 기준으로 병합하는 반면에 
 # merge()함수는, 함수의 기본값은 'inner'(공통된 데이터들의 집합[=교집합])으로 병합 방법을 
-# 지정하지 않으면 inner-join이 기본적으로 수행.
+# 지정하지 않으면 inner-join이 기본적으로 수행되고 매개변수를 지정해주어야한다.
 # 따라서 정리하자면 pd.merge(df1,df2) = df1.join(df2)
 
 # merge() 활용
@@ -453,9 +453,6 @@ pd.merge(df1, df2, on='col1', suffixes=('_left', '_right'))
 0    a     1    10
 1    b     2    20
 '''
-
-
-
 
 pd.merge(df1, df2, left_on='col2', right_index=True)
 '''
