@@ -60,6 +60,7 @@ ns_book4.info(memory_usage='deep')
 # 정리하자면, num(NaN)>1 -> dropna()매서드를 활용하며 열을 삭제할 떄는 
 # axis= 1 지정하고 how 매개변수에 all을 지정하면 NaN이 들어간 모든 열을 삭제함
 # drop()으로 열을 삭제하려면 axis= 1과 삭제하려는 열을 지정해주어야함.
+# ns_book = ns_df.drop(['부가기호','Unnamed: 13'], axis=1)
 # 삭제할 열이 여러 개 일떄 ex) [col1,col2] 리스트안에 열 지정
 
 # 행을 삭제할 떄도 drop()매서드를 활용할 수 있으며 axis= 0 으로 지정(but, 기본값이 0이므로 지정할 필요x)
@@ -70,9 +71,12 @@ ns_book4.info(memory_usage='deep')
 # groupby() 그룹핑을 할 떄 dropna는 NaN의 포함여부에 따라 나뉘는데 false를 지정하면 NaN값 유지
 # duplicated()로 boolean 연산자를 생성할 떄 (위에 행 선택하여 boolean 나열만드는 로직과 동일)
 # 중복된 행을 True로 표시 df.duplicated(subset=[col1,col2,col3]) -> 
-# 중복 행 = ~df.duplicated(subset=[col1,col2,col3])
-# 새로운_df = 기존df[~df.duplicated(subset=[col1,col2,col3])]
+# 중복되지 않은 고유의 행을 True 표시 = ~df.duplicated(subset=[col1,col2,col3])
+# 새로운_df = 기존df[~df.duplicated(subset=[col1,col2,col3])]copy() -> 고유한 행만 선택
+# copy()를 사용x -> df이 별도의 메모리 공간에 저장되는지 보장x -> 데이터가 바뀔 수도 있어
+# 일부 열/행을 선택하여 업데이트 할 떄는 항상 복사하는 것이 좋음.
 
+#%%
 
 ns_book4.isna().sum()
 '''
