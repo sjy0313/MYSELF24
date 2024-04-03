@@ -12,3 +12,6 @@ beautifulsoup4
 
 https://www.data.go.kr/
 https://www.data4library.kr/openDataV?libcode=4707
+# python spyder에서 jupyter notebook 연결
+conda activate YSIT24
+(YSIT24) PS D:\WORKSPACE> conda install sypder-notebook -c conda-forge

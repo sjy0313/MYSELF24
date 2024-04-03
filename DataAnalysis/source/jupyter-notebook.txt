@@ -1,6 +1,7 @@
-anaconda powershell 에서
+anaconda powershell 에서 jupyter notebook에 있는 파일 파이썬 파일로 변환하는 방법:
 conda activate YSIT24
 jupyter notebook --notebook-dir="주피터노트북 파일이 있는 위치 문서에서 복사해주기" 
 jupyter notebook --notebook-dir="D:\WORKSPACE\Python\DataAnalysis\source”
 jupyter notebook -> 원하는 파일선택 -> file -> save and export notebook as -> executable script
 
+https://matplotlib.org/stable/api/index.html matplolib 라이브러리에서 지원하는 그래프 
