@@ -14,8 +14,6 @@ df = pd.read_excel("./data/bestseller_books_2023.xlsx")
 genres = df["분야"].unique()
 print(len(genres)) # 20
  
-#https://github.com/evil-in/amz_bestsellers_books/blob/main/amz_books_bestseller_scraper.py
-
 from selenium.webdriver import Chrome
 from bs4 import BeautifulSoup 
 
