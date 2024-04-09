@@ -4,6 +4,9 @@ Created on Mon Apr  8 15:29:57 2024
 
 @author: Shin
 """
+# 만약 액셀파일을 읽어오지 않을 떄 current directory 확인: 
+import os
+print(os.getcwd())
 
 import pandas as pd
 df = pd.read_excel("./source/data/bestseller_books_2023.xlsx") # 교보문고 액셀파일 불러오기
@@ -56,13 +59,14 @@ print(genre) # ['국내도서', '자기계발', '성공/처세', '자기관리/�
 genre[1] # '자기계발'
 #%%
 
-# glist = 판매상품 아이디를 list자료형으로 변환
-glist = df['판매상품ID'].tolist()
-#%%
-# 1위 부터 100위까지 상세페이지 링크 리스트자료형으로 변환.
+import pandas as pd
+df = pd.read_excel("./source/data/bestseller_books_2023.xlsx") # 교보문고 액셀파일 불러오기
+df.head()
+
+
 def genre_link(glist):
     genre_data = []
-    sampleurl = f"https://product.kyobobook.co.kr/detail/"
+    sampleurl = "https://product.kyobobook.co.kr/detail/"
     for pid in glist:
         genre_data.append(sampleurl + str(pid))
     return genre_data
@@ -71,43 +75,78 @@ glist = df['판매상품ID'].tolist()
 genre_data = genre_link(glist)
 print(genre_data)
 
+print(genre_data)
+
+split_data = [
+    genre_data[0:20],
+    genre_data[20:40],
+    genre_data[40:60],
+    genre_data[60:80],
+    genre_data[80:100]
+]
+print(split_data)
+#%%
+# 데이터 비교 값은 자료 도출되면 python내부적으로 작업처리
+# 81~100개 상세페이지링크에 대한 장르정보
+from selenium.webdriver import Chrome
+from bs4 import BeautifulSoup 
 
 
-   
-def genre_features(genre_data):
-    genre_ft = []
+
+driver = Chrome() 
+
+genre_list5 = []
+chunk5 = split_data[4]
+
+for url in chunk5:
+    driver.get(url)
+    driver.implicitly_wait(3)
+            
+    html = driver.page_source
+    soup = BeautifulSoup(html, "lxml")
+            
+    genre_elements = soup.find_all('a', attrs={'class': 'btn_sub_depth'})
+    if len(genre_elements) >= 2: 
+        second_genre = genre_elements[1].text.strip()
+        genre_list5.append({'장르': second_genre})
+
+driver.quit()
+
+#%%
+
+from selenium.webdriver import Chrome
+from selenium.webdriver.chrome.options import Options
+from bs4 import BeautifulSoup 
+
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+
+genre_list6 = []
+chunk6 = split_data[4]
+driver = Chrome(options=chrome_options)
+
+
+for url in chunk6:
+            driver.get(url)
+            driver.implicitly_wait(3)
+            
+            html = driver.page_source
+            soup = BeautifulSoup(html, "lxml")
+            
+            genre_elements = soup.find_all('a', attrs={'class': 'btn_sub_depth'})
+            if len(genre_elements) >= 2:  # Ensure there are at least 2 elements
+                # Extract the text of the second element
+                second_genre = genre_elements[1].text.strip()
+                genre_list6.append({'장르': second_genre})
+            
+driver.quit()
     
     
 
-    
-        
-    r = requests.get(url.format(goods_id))
-    
-    
-  
+
+
+
  
-  for genre_item in soup.find_all("ul", attrs={"class":"tabs swiper-wrapper ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header"}):
-    genre = genre_item.find("span", attrs={"class":"tab_text"})
-    main_links = genre_item.find('button', class_='tab_link')
-    if genre is not None:
-      genre_data.append({"Genre": genre.text})
-    else:
-      genre_data.append({"Genre": "NA"})
-
-    if main_links is not None:
-        # 'A' 메인 링크가 존재하는 경우
-      genre_data.append({"Links": 'https://product.kyobobook.co.kr/bestseller/total?period=004#?page=1&per=50&period=004&ymw=&bsslBksClstCode' + main_links.get('href')})
-    else:
-        # 'A' 메인 링크가 없는 경우
-      genre_data.append({"Links": "NA"})
-
-  df = pd.DataFrame(genre_data)
-  df['Genre'] = df['Genre'].str.replace('_nav_books_', '')
-  df_links_sub = df.iloc[1:]
-  df_links = df_links_sub.copy()
-  df_links['Page2'] = df_links.Links.str.replace('_nav_books_1', '_pg_2?ie=UTF8&pg=2')
-
-  return df_links
-
+  
 
 
